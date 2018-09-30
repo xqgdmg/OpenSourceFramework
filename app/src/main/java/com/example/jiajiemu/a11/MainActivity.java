@@ -71,40 +71,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void httpCache(){
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(8, TimeUnit.SECONDS);  //设置连接超时时间
-        builder.writeTimeout(8, TimeUnit.SECONDS);//设置写入超时时间
-        builder.readTimeout(8, TimeUnit.SECONDS);//设置读取数据超时时间
-        builder.retryOnConnectionFailure(false);//设置不进行连接失败重试
-        client = builder.build();
-    }
-    String url = "http://图片地址";
 
-    public void loadImageSimple(View view){
-        Glide
-                .with(getApplicationContext())
-                .load(url)
-                .into(imageView);
-    }
-
-    public void loadImage(View view) {
-        Glide.with(getApplicationContext()) // 指定Context
-                .load(url)// 指定图片的URL
-                .placeholder(R.mipmap.ic_launcher)// 指定图片未成功加载前显示的图片
-                .error(R.mipmap.ic_launcher)// 指定图片加载失败显示的图片
-                .override(300, 300)//指定图片的尺寸
-                .fitCenter()//指定图片缩放类型为
-                .centerCrop()// 指定图片缩放类型为
-                .skipMemoryCache(true)// 跳过内存缓存
-                .diskCacheStrategy(DiskCacheStrategy.NONE)//跳过磁盘缓存
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)//仅仅只缓存原来的全分辨率的图像
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)//仅仅缓存最终的图像
-                .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存所有版本的图像
-                .priority(Priority.HIGH)//指定优先级.Glide将会用他们作为一个准则，并尽可能的处理这些请求，但是它不能保证所有的图片都会按照所要求的顺序加载。优先级排序:IMMEDIATE > HIGH > NORMAL >　LOW
-                .into(imageView);//指定显示图片的Imageview
-    }
-
+    /*
+     * 设置缓存的请求
+     */
     public void cacheOkhttpRequest(){
         OkHttpClient client=new OkHttpClient
                 .Builder()
@@ -131,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                    //请求处理,输出结果
+                //请求处理,输出结果
                 System.out.println(response.body());
             }
         });
@@ -142,8 +112,52 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
+    
+    /*
+     * 设置
+     */
+    public void httpCache(){
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(8, TimeUnit.SECONDS);  //设置连接超时时间
+        builder.writeTimeout(8, TimeUnit.SECONDS);//设置写入超时时间
+        builder.readTimeout(8, TimeUnit.SECONDS);//设置读取数据超时时间
+        builder.retryOnConnectionFailure(false);//设置不进行连接失败重试
+        client = builder.build();
+    }
+    String url = "http://图片地址";
+
+    /*
+     * 普通加载
+     */
+    public void loadImageSimple(View view){
+        Glide
+                .with(getApplicationContext())
+                .load(url)
+                .into(imageView);
+    }
+
+    /*
+     * 定义加载方式
+     */
+    public void loadImage(View view) {
+        Glide.with(getApplicationContext()) // 指定Context
+                .load(url)// 指定图片的URL
+                .placeholder(R.mipmap.ic_launcher)// 指定图片未成功加载前显示的图片
+                .error(R.mipmap.ic_launcher)// 指定图片加载失败显示的图片
+                .override(300, 300)//指定图片的尺寸
+                .fitCenter()//指定图片缩放类型为
+                .centerCrop()// 指定图片缩放类型为
+                .skipMemoryCache(true)// 跳过内存缓存
+                .diskCacheStrategy(DiskCacheStrategy.NONE)//跳过磁盘缓存
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)//仅仅只缓存原来的全分辨率的图像
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)//仅仅缓存最终的图像
+                .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存所有版本的图像
+                .priority(Priority.HIGH)//指定优先级.Glide将会用他们作为一个准则，并尽可能的处理这些请求，但是它不能保证所有的图片都会按照所要求的顺序加载。优先级排序:IMMEDIATE > HIGH > NORMAL >　LOW
+                .into(imageView);//指定显示图片的Imageview
+    }
+
+
 
 
 
