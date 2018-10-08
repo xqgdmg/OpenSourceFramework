@@ -11,5 +11,7 @@ import dagger.Provides;
 public class ClassAInject {
     @Inject  ClassB classB;
 
-    public ClassAInject() {}
+    public ClassAInject() {
+
+    }
 }
